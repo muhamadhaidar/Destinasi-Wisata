@@ -22,9 +22,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
       <View style={styles.imageWrapper}>
         <Image source={image} style={styles.image} />
       </View>
-
       <View style={styles.info}>
-        {/* Grup Atas: Judul & Lokasi (Tidak berubah) */}
         <View>
           <Text style={styles.title}>{title}</Text>
           <View style={styles.locationRow}>
@@ -32,18 +30,13 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
             <Text style={styles.desc}>{desc}</Text>
           </View>
         </View>
-
-        {/* === PERUBAHAN DI SINI === */}
-        {/* Grup Bawah: Rating dan Harga ditumpuk ke bawah */}
         <View style={styles.bottomContent}>
           <View style={styles.ratingRow}>
             <Ionicons name="star" size={16} color="#fff" />
             <Text style={styles.rating}>{rating}</Text>
           </View>
-          {/* Teks harga dipindah ke sini (di luar ratingRow) */}
           <Text style={styles.price}>{price}</Text>
         </View>
-        {/* === AKHIR PERUBAHAN === */}
       </View>
     </View>
   );
@@ -93,12 +86,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     flex: 1,
   },
-  
-  // === STYLE DIUBAH DI SINI ===
-  // Mengganti nama 'bottomRow' menjadi 'bottomContent'
   bottomContent: {
-    // Tidak perlu 'flexDirection' atau 'justifyContent'
-    // karena kita ingin menumpuknya secara vertikal (default)
     marginTop: 10,
   },
   ratingRow: {
@@ -114,7 +102,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     color: '#fff',
-    // Tambahkan margin atas agar ada jarak dari rating
     marginTop: 4,
   },
 });

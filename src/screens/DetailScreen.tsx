@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-// Import 'TouchableOpacity' untuk tombol "View All"
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native'; 
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'; 
 import DestinationHeader from '../components/DestinationHeader';
 import ReviewCard from '../components/ReviewCard';
 import RecommendationCard from '../components/RecommendationCard';
@@ -11,7 +10,6 @@ const DetailScreen = ({ navigation }: any) => {
   const pricePerTrip = 10000;
 
   const recommendations = [
-    // ... (data rekomendasi kamu tetap sama)
     {
       id: 1,
       title: 'Phinisi Luxury Private Trip',
@@ -38,16 +36,15 @@ const DetailScreen = ({ navigation }: any) => {
     },
   ];
 
-  // === DATA REVIEW DIBUAT JADI ARRAY ===
   const reviews = [
     {
       id: 1,
       user: 'Haidar Soleh',
-      review: 'Masya Allah amazing yahh, best experience in my life very very worth it i like it!',
+      review: 'MasyaAllah amazing yahh, best experience in my life very very worth it i like it!\nVery good very well',
     },
     {
       id: 2,
-      user: 'Alif Starboy',
+      user: 'Steve starboy',
       review: 'Very good very well, super recommended!',
     },
   ];
@@ -56,7 +53,7 @@ const DetailScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 160 }}>
         <DestinationHeader
-          image={require('../assets/images/LabuanBajo.jpg')}
+          image={require('../assets/images/LabuanBajo.png')}
           location="Labuan Bajo"
           temperature="24°C"
           onBack={() => navigation.goBack()}
@@ -73,28 +70,24 @@ const DetailScreen = ({ navigation }: any) => {
 
           <Text style={styles.title}>Discover the Beauty of Labuan Bajo</Text>
 
-          {/* === BAGIAN REVIEW === */}
-
           <ReviewCard
             user={reviews[0].user}
             review={reviews[0].review}
           />
 
-          <View style={styles.reviewFooter}>
-            <View style={styles.fadedReview}>
-              <ReviewCard
-                user={reviews[1].user}
-                review={reviews[1].review}
-              />
-            </View>
-            
-            <TouchableOpacity style={styles.viewAllButton} onPress={() => { /* Nanti diisi logika pindah halaman */ }}>
+          <View style={styles.fadedReviewFrame}>
+            <Image 
+              source={require('../assets/images/avatar2.jpg')}
+              style={styles.fadedAvatar} 
+            />
+            <Text style={styles.fadedName}>{reviews[1].user}</Text>
+          </View>
+
+          <View style={styles.viewAllContainer}>
+            <TouchableOpacity style={styles.viewAllButton}>
               <Text style={styles.viewAllText}>View All</Text>
             </TouchableOpacity>
           </View>
-
-          {/* === AKHIR DARI BAGIAN REVIEW === */}
-
 
           <Text style={styles.sectionTitle}>Recommendation in Bajo</Text>
 
@@ -111,13 +104,14 @@ const DetailScreen = ({ navigation }: any) => {
         </View>
       </ScrollView>
 
-      <PriceSection
-        style={styles.priceSection} 
-        quantity={quantity}
-        price={pricePerTrip}
-        onAdd={() => setQuantity(quantity + 1)}
-        onMinus={() => quantity > 1 && setQuantity(quantity - 1)}
-      />
+      <View style={styles.priceSection}>
+        <PriceSection
+          quantity={quantity}
+          price={pricePerTrip}
+          onAdd={() => setQuantity(quantity + 1)}
+          onMinus={() => quantity > 1 && setQuantity(quantity - 1)}
+        />
+      </View>
     </View>
   );
 };
@@ -127,14 +121,13 @@ export default DetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f4ef', 
+    backgroundColor: '#f6f4ef',
   },
   content: {
     backgroundColor: '#f6f4ef',
-    marginTop: -20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    marginTop: -10,
     padding: 20,
+    paddingTop: 50,
   },
   countryRow: {
     flexDirection: 'row',
@@ -142,50 +135,60 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 10,
   },
-
-  // === STYLE BENDERA DIUBAH DI SINI ===
   flagContainer: {
-    width: 20, // Diubah dari 24 (bikin sama dgn height)
-    height: 20, // Diubah dari 16 (bikin sama dgn width)
+    width: 20,
+    height: 20,
     borderWidth: 0.5,
     borderColor: '#ccc',
     overflow: 'hidden',
-    borderRadius: 10, // Diubah dari 2 (bikin setengah dari width/height)
+    borderRadius: 10,
   },
-  // === AKHIR PERUBAHAN STYLE BENDERA ===
-
   flagRed: { flex: 1, backgroundColor: '#FF0000' },
   flagWhite: { flex: 1, backgroundColor: '#FFFFFF' },
   countryText: { fontSize: 14, color: '#333' },
   title: { fontSize: 20, fontWeight: 'bold', marginBottom: 15 },
-  
-  reviewFooter: {
+  fadedReviewFrame: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    marginBottom: 20,
+    opacity: 0.3,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center', 
-    marginTop: -15, 
-    paddingHorizontal: 5, 
-    gap: 20, 
   },
-  fadedReview: {
-    opacity: 0.3, 
-    transform: [{ translateY: 10 }], 
+  fadedAvatar: {
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+    marginRight: 10,
   },
-  viewAllButton: {
+  fadedName: {
+    fontWeight: '600',
+    fontSize: 13,
+    color: '#333',
+  },
+  viewAllContainer: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  viewAllButton: { 
     backgroundColor: '#E5E4DE', 
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 9999, 
-    zIndex: 10, 
   },
-  viewAllText: {
+  viewAllText: { 
     color: '#333',
     fontWeight: '600',
     fontSize: 14,
   },
-
-  sectionTitle: { fontWeight: 'bold', fontSize: 16, marginTop: 20, marginBottom: 10 },
-  
+  sectionTitle: { 
+    fontWeight: 'bold', 
+    fontSize: 16, 
+    marginTop: 20, 
+    marginBottom: 10 
+  },
   priceSection: {
     position: 'absolute',
     bottom: 0,
